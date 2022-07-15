@@ -93,9 +93,43 @@
 
 > توصيل المقاوم المتغير على ال breadboard وتوصيل الاقطاب positive : negative ثم توصيل السلك الازرق من المقاوم المتغير الى الاوردينو PIN A0  
 
+
+
+##### 3-استخدام السرفو موتر مع PCA9586 متصل مع الاوردينو اونو
+
+> توصيل SCL من PCA9685 الى الاوردينو SCL
+> 
+> توصيل SDA من PCA9685 الى الاوردينو SDA
+> 
+> توصيل GNR من PCA9685 الى الوردينو GNR
+> 
+> توصيل VCC من PCA9685 الى الاوردينو 5V
+> 
+> توصيل السرفو موتر الى PCA9685-OUTPUT 0
+> 
+> توصيل البطارية 5V الى PCA9685
 .
 
 
+##### 4-استخدام السرفو موتر مع مفاوم متغير مع PCA9685 متصل مع الاوردينو اونو
+
+>  توصيل SCL من PCA9685 الى الاوردينو SCL
+> 
+> توصيل SDA من PCA9685 الى الاوردينو SDA
+> 
+> توصيل GNR من PCA9685 الى الوردينو GNR
+> 
+> توصيل VCC من PCA9685 الى الاوردينو 5V
+> 
+> توصيل السرفو موتر الى PCA9685-OUTPUT 0
+> 
+> توصيل البطارية 5V الى PCA9685
+
+> توصيل المقاوم المتغير SIGNAL الى الاوردينو A0
+
+> توصيل المقاوم المتغير GNR الى الاوردينو GNR
+
+> توصيل المقاوم المتغير VDD الى الاوردينو 5V
 
 
 
@@ -129,7 +163,7 @@
 تحرك السرفو موتر من 100 الى 0 درجة
 
 
-
+--------------------------------------------------------------------------------------------------------------------------------------------------
 .
 
 
@@ -162,9 +196,131 @@
 
 
 
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
+![SERVO 1](https://user-images.githubusercontent.com/109243989/179320926-e6591b4a-a00e-402a-8bdb-570356992b22.png)
 
+
+##The Code
+
+#include <Wire.h>
+
+#include <Adafruit_PWMServoDriver.h>
+
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
+#define MIN_PULSE_WIDTH 650
+
+#define MAX_PULSE_WIDTH 2350
+
+#define DEFAULT_PULSE_WIDTH 1500
+
+#define FREQUENCY 50
+
+int servonum =0;
+
+void setup() {
+
+Serial.begin(9600);
+
+Serial.println("16 channel Servo test!");
+
+pwm.begin();
+
+pwm.setPWMFreq(FREQUENCY);
+
+} int pulseWidth(int angle) { int pulse_wide, analog_value;
+
+pulse_wide = map(angle, 0, 180, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+
+analog_value = int(float(pulse_wide) / 1000000 * FREQUENCY * 4096);
+
+Serial.println(analog_value);
+
+return analog_value;
+
+}
+
+void loop() {
+
+pwm.setPWM(0, 0, pulseWidth(0));
+
+delay(1000);
+
+pwm.setPWM(0, 0, pulseWidth(90));
+
+delay(500);
+
+pwm.setPWM(0, 0, pulseWidth(120));
+
+delay(1000);
+
+}
+
+
+![SERVO2](https://user-images.githubusercontent.com/109243989/179321150-952b5dae-a0ff-4c5e-9ae3-ee2a2201e676.png)
+
+
+The code
+
+// Include Wire Library for I2C Communications
+
+#include <Wire.h>
+
+// Include Adafruit PWM Library
+
+#include <Adafruit_PWMServoDriver.h>
+
+#define MIN_PULSE_WIDTH 650
+
+#define MAX_PULSE_WIDTH 2350
+
+#define FREQUENCY 50
+
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
+// Define Potentiometer Inputs
+
+int controlA = A0;
+
+// Define Motor Outputs on PCA9685 board
+
+int motorA = 0;
+
+void setup() { pwm.begin();
+
+pwm.setPWMFreq(FREQUENCY);
+
+}
+
+void moveMotor(int controlIn, int motorOut)
+
+{ int pulse_wide, pulse_width, potVal;
+
+// Read values from potentiometer
+
+potVal = analogRead(controlIn);
+
+// Convert to pulse width
+
+pulse_wide = map(potVal, 0, 1023, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+
+pulse_width = int(float(pulse_wide) / 1000000 * FREQUENCY * 4096);
+
+//Control Motor
+
+pwm.setPWM(motorOut, 0, pulse_width);
+
+}
+
+void loop() {
+
+//Control Motor A
+
+moveMotor(controlA, motorA);
+
+}
 
