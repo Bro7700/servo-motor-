@@ -101,16 +101,17 @@
 
 ![Powerful Blorr-Sango (3)](https://user-images.githubusercontent.com/109243989/179120601-ea58e642-6070-4107-af1e-417b5e145e55.png)
 
+تحرك السرفو موتر من 0 الى 100 درجة 
 
 
 
-AFTER 2.0 MS
 
 
 
 
 ![Powerful Blorr-Sango (4)](https://user-images.githubusercontent.com/109243989/179120731-16ad697c-a20f-4f6a-8fe0-e2bd42842e7e.png)
 
+تحرك السرفو موتر من 100 الى 0 درجة
 
 
 
