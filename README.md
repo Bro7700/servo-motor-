@@ -1,4 +1,4 @@
-# servo-motor-
+# Servo Motor with Arduino UNO
 
 مهام الاسبوع الثاني
 
