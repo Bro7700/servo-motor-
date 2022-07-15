@@ -88,7 +88,8 @@
 ## الرسم البياني والمحاكاة
 
 
- [للاطلاع انقر هنا](https://www.tinkercad.com/))
+https://www.tinkercad.com/things/kn2olnurWz0-powerful-blorr-sango/editel(للاطلاع انقر هنا) 
+
 
 
 
