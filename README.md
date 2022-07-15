@@ -85,6 +85,8 @@
 
 #الرسم البياني والمحاكاة
 
+*  [للاطلاع انقر هنا](* AUTODESK TINKERCAD [Open](https://www.tinkercad.com/))
+
 
 
 
