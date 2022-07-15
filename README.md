@@ -4,7 +4,7 @@
 
 
 
-.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 ## المقدمة
@@ -12,7 +12,7 @@
 تم عمل المشروع باستخدام برنامج الاوردينو وبرنامج التنكر كاد للتحكم بمحرك يعمل على حركة بزوايا دقيقة يسمى السرفو موتر ويستخدم عادة باذرع الروبوتات للتحرك من درجة 0 الى 180 درجة بالاضافة الى مقاوم متغير تتغير حركة السرفو موتر بتغير المقاوم المتغير مما يجعل ذلك سهولة التحكم بزاوية السرفو موتر  
 
 
-.
+
 
 
 
@@ -36,7 +36,7 @@
 
 
 
-.
+
 
 
 
@@ -62,7 +62,7 @@
 
 
 
-.
+
 
 
 
@@ -108,7 +108,7 @@
 > توصيل السرفو موتر الى PCA9685-OUTPUT 0
 > 
 > توصيل البطارية 5V الى PCA9685
-.
+
 
 
 ##### 4-استخدام السرفو موتر مع مفاوم متغير مع PCA9685 متصل مع الاوردينو اونو
@@ -144,7 +144,7 @@
 
 
 
-.
+
 
 
 
@@ -161,10 +161,69 @@
 ![Powerful Blorr-Sango (4)](https://user-images.githubusercontent.com/109243989/179120731-16ad697c-a20f-4f6a-8fe0-e2bd42842e7e.png)
 
 تحرك السرفو موتر من 100 الى 0 درجة
+## the code
+
+// Include Wire Library for I2C Communications
+
+#include <Wire.h>
+
+// Include Adafruit PWM Library
+
+#include <Adafruit_PWMServoDriver.h>
+
+#define MIN_PULSE_WIDTH 650
+
+#define MAX_PULSE_WIDTH 2350
+
+#define FREQUENCY 50
+
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
+// Define Potentiometer Inputs
+
+int controlA = A0;
+
+// Define Motor Outputs on PCA9685 board
+
+int motorA = 0;
+
+void setup() { pwm.begin();
+
+pwm.setPWMFreq(FREQUENCY);
+
+}
+
+void moveMotor(int controlIn, int motorOut)
+
+{ int pulse_wide, pulse_width, potVal;
+
+// Read values from potentiometer
+
+potVal = analogRead(controlIn);
+
+// Convert to pulse width
+
+pulse_wide = map(potVal, 0, 1023, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+
+pulse_width = int(float(pulse_wide) / 1000000 * FREQUENCY * 4096);
+
+//Control Motor
+
+pwm.setPWM(motorOut, 0, pulse_width);
+
+}
+
+void loop() {
+
+//Control Motor A
+
+moveMotor(controlA, motorA);
+
+}
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
-.
+
 
 
 
@@ -195,6 +254,29 @@
 ![Exquisite Fulffy-Bojo (3)](https://user-images.githubusercontent.com/109243989/179136028-f95ea52c-69ce-4022-b8c3-c10472559571.png)
 
 
+## The code
+#include <Servo.h>
+
+Servo myservo; // create servo object to control a servo
+
+int potpin = 0; // analog pin used to connect the potentiometer
+
+int val; // variable to read the value from the analog pin
+
+void setup() { myservo.attach(9); // attaches the servo on pin 9 to the servo object }
+
+void loop() {
+
+val = analogRead(potpin); // reads the value of the potentiometer (value between 0 and 1023)
+
+val = map(val, 0, 1023, 0, 180); // scale it to use it with the servo (value between 0 and 180)
+
+myservo.write(val); // sets the servo position according to the scaled value
+
+delay(15); // waits for the servo to get
+
+}
+
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -204,7 +286,7 @@
 ![SERVO 1](https://user-images.githubusercontent.com/109243989/179320926-e6591b4a-a00e-402a-8bdb-570356992b22.png)
 
 
-##The Code
+## The Code
 
 #include <Wire.h>
 
